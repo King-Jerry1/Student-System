@@ -1,0 +1,209 @@
+# Tutor name on git hub (https://github.com/fzaninotto)
+I am happy to be a php writer
+started Monday 28th August 2023.
+My name is Jeremiah Isaiah, Am a web developer
+#
+================ HOW to troubleshoot Migration Issue in PHP ================================
+1. CLICK ON XAMMP SERVER 
+2. SELECT CONFIG AND CLICK ON php.ini
+3. SEARCH FOR 'extension' using the find command
+4. locate 'extension=pdo_mysql'
+5. if a semi-colon is found on ;extension=pdo_mysql, remove the semi-colon and replace it with 'extension=pdo_mysql',
+    That solves the PROBLEM.
+================ END OF HOW to troubleshoot Migration Issue in PHP ================================
+
+================ HOW tO SETUP DATABASE CONNECTION IN LARAVEL IN YOUR PHPMYADMIN ================================
+1. cREATE A DATABASE OF YOUR CHOICE E.G 'kingjmedia'
+2. visit your .env in your  Laravel framework and replace the default database name with 
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=kingjmedia
+        DB_USERNAME=kingjmedia
+        DB_PASSWORD= kingjoy122
+3. run migration by clicking on CTRL + J to open TERMINAL 
+4. RUN THIS COMMAND 'php artisan migrate'
+5. you are good to start writing sql script
+
+================ END OF HOW RO SETUP DATABASE CONNECTION IN LARAVEL IN YOUR PHPMYADMIN ================================
+
+
+// Note
+*php artisan rooute:list* "is used to check the created list of route 
+or view user created route  List" 
+
+
+====================== LESSON 1 STRUCTURE OF LARAVEL  & ROUTING ================================
+// Route::match(['get', 'post'], '/', function(){
+//     return 'POST AND GET ALLOWED';
+// });
+
+Route::get('/', function () {
+    return 'Welcome';
+});
+
+Route::get('/user', function(Request $request) {
+    dd($request);
+    return null;
+});
+
+Route::get('/get-text', function(){
+    // $name = str('King Jerry');
+    return response('Hello King Jerry',  200) 
+    ->header('Content-Type', 'text/plain');
+});
+
+## for ID and group name using PARAMETER 
+Route::get('/user/{id}/{group}  ', function($id, $group){
+    // $name = str('King Jerry');
+    return response($id.  ' - ' .$group,  200) 
+    ->header('Content-Type', 'text/plain');
+});
+
+# Requesting Json File
+Route::get('/request-json ', function(){
+    return response() ->json([
+ 
+
+        'name' => 'King Jerry', 'age', '22'
+        
+    ]) 
+    ->header('Content-Type', 'text/plain');
+});
+
+# Creating a downloadable FILE and fetching from Public folder
+Route::get('/request-download', function(){
+
+    $path = public_path(). '/sample.txt';
+    $name = 'sample.txt';
+    $headers = array('Content-type : application/text-plain',);
+        return response()->download($path, $name, $headers);
+});
+==================================== END OF LARAVEL STRUCTURE & ROUTING ===============================
+
+
+
+====================== LESSON 2 USE OF CONTROLLER IN LARAVEL ============================================
+Controller In Laravel
+STEP1
+1. Visit the terminal in ur Vs Code and Type "php artisan make:Controller UserController(
+    Note each new word is a capital Letter) "
+
+    note: CTRL + J TO OPEN TERMINAL
+
+
+
+====================== END OF LESSON 2 USE OF CONTROLLER IN LARAVEL ============================================
+
+
+====================== LESSON 3 DATABASE CONNECTION ============================================
+ php artisan migrate:refresh --seed (This refreshes the database and automatically
+ adds users to the table from the DATABASE SEEDER.php) the number is set using (  \App\Models\User::factory(10)->create();)
+ the factory(10) CAN BE CHANGED TO ANY number of your choice, note, 
+ the number inserted add more users to the User Table created during First Migration
+
+HOW TO CREATE A MODEL IN LARAVEL AND ALSO A CONTROLLER
+1. hit CTRL  J on your Keyboard TO BEING THE TERMINAL OR HIDE IT.
+2. type ' php artisan make:model Student and press enter, this automatically create a file 'Student.php in the Model folder
+TO CREATE A CONTROLLER
+1. type ' php artisan make:controller StudentController and press enter, this automatically create a file 'StudentController.php in the CONTROLLER folder 
+CTR + P TO SEARCH FOR FILES IN A CURRENT WORKINF FOLDER
+
+===========================HOW TO create PHP MIGRATION IN LARAVEL====================================
+STEP1 
+1. hit CTRL = J on your Keyboard 
+2. type 'php artisan make:migration student_table --table=students' and press enter key on your keyboard
+    (--table=students) <-- this refers to the table name u want to create. 
+How to clear a migration 
+1. Type 'php artisan make:migration student_table_clear' 
+add clear to the table name to clear all values
+
+HOW TO CREATE A Table
+1. type 'php artisan make:migration create_students_table' in the terminal and press enter
+step 2
+type 'php artisan migrate' in the terminal and press enter
+step 3
+php artisan cache:clear (To clear Unwanted files)
+
+
+=======================================================================================
+
+============ STEP BY STEP PROCESS TO CREATE A DATABASSE IN LARAVEL ========================
+a step-by-step guide on how to create and store a password in the database:
+
+Create a Model: First, create a model for the user or the entity that requires authentication. 
+In Laravel, you can generate a model using Artisan, the command-line tool:
+********* php artisan make:model User **********************
+This command will generate a User.php file in the app/Models directory (or in app for older Laravel versions).
+
+Database Configuration: Ensure that you have configured your database connection in the config/database.php file
+ with the correct credentials for your database server.
+
+Migration: Create a migration for the user table. Run the following 
+command to generate a migration for the user table:
+************************php artisan make:migration create_users_table*********************
+Then, open the generated migration file in the database/migrations directory
+ and define the schema for the user table, including a password column:
+
+public function up()
+{
+    Schema::create('users', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email')->unique();
+        $table->string('password');
+        $table->rememberToken();
+        $table->timestamps();
+    });
+}
+Run Migrations: Run the migrations to create the user table in the database:
+
+Copy code
+php artisan migrate
+Hashing Passwords: In Laravel, you don't need to manually hash passwords.
+The framework provides the bcrypt() function to hash passwords. 
+When registering or updating a user's password, you can use this function like this:
+
+php
+Copy code
+$hashedPassword = bcrypt('your_password_here');
+You can place this code in your controller or service where user registration or password updates occur.
+
+Store the Hashed Password: After hashing the password, you can store it in the database. Typically, you would do this within your controller's logic for user registration or password updates. Here's an example of how you might store a user's hashed password:
+
+php
+Copy code
+use App\Models\User;
+
+// Your registration or update logic
+$user = new User;
+$user->name = 'John Doe';
+$user->email = 'john@example.com';
+$user->password = bcrypt('password123');
+$user->save();
+Remember to replace 'password123' with the actual password you want to store.
+
+Authentication: When authenticating users, Laravel will automatically compare 
+the provided plain text password with the hashed password stored in the database.
+ You can use Laravel's built-in authentication system or write your custom logic for user login.
+
+That's it! Laravel will handle the hashing and verification of
+ passwords for you, ensuring that they are securely stored and compared during authentication.
+
+==============================================================================================================
+for Model Creation
+
+php artisan make:model User
+
+for authentication
+
+php artisan make:middleware AuthenticateUser
+
+===================================== Google mail deployment steps ============
+1. composer require laravel/socialite
+2. visit Google Cloud console
+3. https://developers.google.com/identity/oauth2/web/guides/load-3p-authorization-library
+(use to create library)
+==================== tailwindcss component alert ==============
+https://v1.tailwindcss.com/components/alerts
+

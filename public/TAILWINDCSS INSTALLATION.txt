@@ -1,0 +1,74 @@
+https://tailwindcss.com/docs/guides/laravel#vite
+
+
+================ laravel Project Installation =====================
+composer create-project laravel/laravel my-project
+
+cd my-project
+
+================ End of laravel Project Installation =====================
+
+================ tailwindcss  Installation =====================
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
+
+
+================END OF  tailwindcss  Installation =====================
+
+========================tailwind.config.js================================
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./resources/**/*.blade.php",
+    "./resources/**/*.js",
+    "./resources/**/*.vue",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+========================End of tailwind.config.js================================
+
+========================resources/css/app.css================================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+========================End of resources/css/app.css=======================
+
+
+===================== App.blade.php =========================
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  @vite('resources/css/app.css')
+</head>
+<body>
+  <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+</body>
+</html>
+
+===================== End of App.blade.php =========================
+
+
+
+======================= Setting Connection on Server.hmr in Vite.config.js ===========
+type the following
+ server: {
+        hmr:{
+            host: 'localhost'
+        }
+    },
+
+    OR Visit http://vite.js.com/docs/server-options
+
+======================= end of setting Connection on Server.phar in Vite.config.js ===========
+To start Vite Server run
+npm run dev
